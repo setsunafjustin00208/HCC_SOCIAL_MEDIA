@@ -1611,7 +1611,7 @@ nav.user-menu .panel .list-group-item .time-ago {
     color: #a7a7a7;
     font-size: 14px;
     width: 85%;
-    border: ridge 1px #e3e7ea;
+    border: solid 1px #e3e7ea;
     background: #f4f7f9;
     float: left;
 }

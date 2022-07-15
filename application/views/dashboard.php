@@ -7,7 +7,7 @@ if (!$loginVerification) {
     redirect("main/index");
 
 }
-if (($loginVerificationuser) != "ADMIN") {
+elseif (($loginVerificationuser) != "ADMIN") {
     redirect("main/user_page");
 
 }
@@ -95,6 +95,11 @@ if (($loginVerificationuser) != "ADMIN") {
     display: inline-block;
   }
 
+  .button-left{
+    padding-left: 10px;
+    height: 42px;
+  }
+
     .sec{
         position: relative;
         right: -1px;
@@ -130,37 +135,14 @@ if (($loginVerificationuser) != "ADMIN") {
                     <span class = "nav-text">Dashboard</span>
                 </a>
             </li>
-
+           
             <li class = "has-subnav">
-                <a href = "">
-                    <i class = "fa fa-cogs" aria-hidden="true"></i>
-                    <span class = "nav-text">Components</span>
-                </a>
-            </li>
-
-            <li class = "has-subnav">
-                <a href = "">
-                <i class = "fa fa-check-square-o nav_icon"></i>
-                <span class ="nav-text">Records</span>
-                </a>
-
-            </li>
-
-            <li class = "has-subnav">
-                <a href = "">
-                <i class = "fa fa-file-text-o nav_icon"></i>
-                <span class ="nav-text">Feeds</span>
-                </a>
-
-            </li>
-
-            <li class = "has-subnav">
-                <a href = "">
+                <a href = "<?=site_url('main/statistics')?>">
                 <i class = "fa fa-list-ul nav_icon"></i>
                 <span class ="nav-text">Statistics</span>
                 </a>
             </li>
-
+           
             <li class = "has-subnav">
                 <?php
                 $countactivation=$this->db->query("SELECT COUNT(*) as count FROM activation");
@@ -207,8 +189,7 @@ if (($loginVerificationuser) != "ADMIN") {
                   </div>
               </a>
               <ul class="dropdown-menu drp-mnu">
-                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="<?=site_url('main/dashboard')?>"><i class="fa fa-cog"></i> Settings</a></li>
                 <li><a href="logout"><i class="fa fa-sign-out"></i> Log-out</a></li>
 
               </ul>
@@ -216,10 +197,10 @@ if (($loginVerificationuser) != "ADMIN") {
       </ul>
       </div>
   </div>
- <div class="W3l_search text-right">
+ <div class="w3l_search text-right">
     <?=form_open("main/searchUsers")?>
       <input type = "text" name ="key">
-      <button type = "submit" value="SEARCH" class = "btn btn-warning">
+      <button type = "submit" value="SEARCH" class = "btn btn-warning button-left">
       <i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
   </div>

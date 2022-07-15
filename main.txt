@@ -1,0 +1,89 @@
+<?php
+
+Class main extends CI_Controller{
+
+Function __construct(){
+Parent::__construct();
+
+$this->load->library('table');
+$this->load->library('upload');
+$this->load->library('image_lib');
+$this->load->library('javascript');
+$this->load->library('form_validation');
+$this->load->helper(array('form','url','html'));
+}
+
+Function index(){
+	$this->load->view('login');
+}
+Function login(){
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+
+		$queryLogin=$this->db->query("SELECT * FROM user where username = '{$username}' and password = '{$password}'");
+
+
+
+
+if($queryLogin->num_rows>0){
+	$row=$queryLogin->row();
+	$userdata=array('userID'=>$row->userID,'Fname' =>$row->Fname,'Mi'=>$row->Mi,'Lname'=>$row->Lname,'logged_in'=>TRUE);
+	$this->session->set_userdata($userdata);
+
+	if(($row->User_Type) == "ADMIN"){
+		redirect("main/dashboard");
+
+	}else{
+
+		redirect("main/user_page");
+	}
+	
+	
+	}else{
+		$_SESSION['wrongLogin']="INVALID USERNAME OR PASSWORD";
+		$this->load->view('login');
+
+
+	}
+}
+
+Function dashboard(){
+$this->load->view('dashboard');
+}
+
+Function logout(){
+$this->session->sess_destroy();
+redirect("main/index");
+}
+
+Function register(){
+$this->load->view('sign_up');
+}
+
+Function saveRegister(){
+$this->db->insert('user',$_POST);
+$_SESSION['message']="Successfully Registered!";
+$this->load->view('sign_up');
+}
+
+Function user_page(){
+$this->load->view('user_page');
+}
+Function updateUser(){
+$userID=$this->uri->segment(3);
+$this->db->Where('userID',$userID);
+$this->db->update('user',$_POST);
+redirect("main/dashboard");
+}
+Function  deleteUser(){
+$userID=$this->uri->segment(3);
+$this->db->Where('userID',$userID);
+$this->db->delete('user');
+redirect("main/dashboard");
+}
+Function searchUsers(){
+$this->load->view("dashboard");
+}
+}
+
+?>

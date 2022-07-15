@@ -30,7 +30,7 @@
         -moz-transition: all 1.5s ease-in-out;
         -o-transition: all 1.5s ease-in-out;
         }
-        .message {
+        .success {
         padding: 8px;
         background-color: green;
         border: solid 2px greenyellow;
@@ -88,6 +88,7 @@ if (isset($_SESSION['wrongLogIn'])) {
             </p>
         </div>
     </div>
+	
 
 
 

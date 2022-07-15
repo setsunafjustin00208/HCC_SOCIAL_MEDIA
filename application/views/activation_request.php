@@ -7,21 +7,19 @@ if (!$loginVerification) {
     redirect("main/index");
 
 }
-if (($loginVerificationuser) != "ADMIN") {
+elseif (($loginVerificationuser) != "ADMIN") {
     redirect("main/user_page");
 
 }
 
 
+
 ?>
-
-
-  
 
 <!DOCTYPE html>
 <html>
 <head>
-        <title> HCC DASHBOARD </title>
+        <title> ACTIVATION </title>
         <link href = "<?=base_url()?>bootstrap/css/basictable.css" rel ="stylesheet" type = "text/css">
         <link href = "<?=base_url()?>bootstrap/css/bootstrap.css" rel ="stylesheet" type = "text/css">
         <link href = "<?=base_url()?>bootstrap/css/examples.css" rel ="stylesheet" type = "text/css">
@@ -106,6 +104,10 @@ if (($loginVerificationuser) != "ADMIN") {
       border-width: 2px;
       padding-top: 20px;
     }
+    .button-left{
+    padding-left: 10px;
+    height: 42px;
+  }
     </style>
 
 
@@ -128,32 +130,8 @@ if (($loginVerificationuser) != "ADMIN") {
                     <span class = "nav-text">Dashboard</span>
                 </a>
             </li>
-
             <li class = "has-subnav">
-                <a href = "">
-                    <i class = "fa fa-cogs" aria-hidden="true"></i>
-                    <span class = "nav-text">Components</span>
-                </a>
-            </li>
-
-            <li class = "has-subnav">
-                <a href = "">
-                <i class = "fa fa-check-square-o nav_icon"></i>
-                <span class ="nav-text">Records</span>
-                </a>
-
-            </li>
-
-            <li class = "has-subnav">
-                <a href = "">
-                <i class = "fa fa-file-text-o nav_icon"></i>
-                <span class ="nav-text">Feeds</span>
-                </a>
-
-            </li>
-
-            <li class = "has-subnav">
-                <a href = "">
+                <a href = "<?=site_url('main/statistics')?>">
                 <i class = "fa fa-list-ul nav_icon"></i>
                 <span class ="nav-text">Statistics</span>
                 </a>
@@ -202,8 +180,7 @@ if (($loginVerificationuser) != "ADMIN") {
                   </div>
               </a>
               <ul class="dropdown-menu drp-mnu">
-                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="<?=site_url('main/dashboard')?>"><i class="fa fa-cog"></i> Settings</a></li>
                 <li><a href="logout"><i class="fa fa-sign-out"></i> Log-out</a></li>
                   
               </ul>
@@ -211,10 +188,10 @@ if (($loginVerificationuser) != "ADMIN") {
       </ul>
       </div>
   </div>
- <div class="W3l_search text-right">
-    <?=form_open("main/searchRequest")?>
+ <div class="w3l_search text-right">
+    <?=form_open("main/searchUsers")?>
       <input type = "text" name ="key">
-      <button type = "submit" value="SEARCH" class = "btn btn-warning">
+      <button type = "submit" value="SEARCH" class = "btn btn-warning button-left">
       <i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
   </div>
@@ -237,8 +214,8 @@ if (($loginVerificationuser) != "ADMIN") {
     <tr>
         <th class="text-center">First name</th>
         <th class="text-center">Middle initial</th>
-        <th  class="text-center">Last name</th>
-        <th colspan="3" class="text-center">Action</th>
+        <th class="text-center">Last name</th>
+        <th colspan="2" class="text-center">Action</th>
     </tr>
 
 <?php 
@@ -248,6 +225,7 @@ if(isset($_POST['key'])){
   $queryForUsers =$this->db->query("SELECT * FROM activation INNER JOIN users ON users.Fname LIKE CONCAT('%{$key}', activation.Fname, '%{$key}') AND users.Lname LIKE CONCAT('%{$key}',activation.Lname,'%{$key}')");
 }else{
     $queryForUsers =$this->db->query("SELECT * FROM activation INNER JOIN users where activation.Fname = users.Fname");
+
     
       
 }
@@ -255,7 +233,10 @@ foreach($queryForUsers->result() as $rowUsers):
 ?>
         <tr>    
             <?php
-                        if(($rowUsers->user_type)=="ADMIN"){
+
+                        if(($crow->count)==0){
+                          
+                        echo '<td> There are no requests......</td>';
 
                         }else{
                          
